@@ -50,12 +50,12 @@ exports.register_post = async (req, res) => {
     return res.redirect("/register");
   }
 
-  const hasdPsw = await bcrypt.hash(password, 12);
+  const hashedPassword = await bcrypt.hash(password, 12);
 
   user = new User({
     username,
     email,
-    password: hasdPsw,
+    password: hashedPassword,
   });
 
   await user.save();
@@ -64,7 +64,8 @@ exports.register_post = async (req, res) => {
 
 exports.dashboard_get = (req, res) => {
   const username = req.session.username;
-  res.render("dashboard", { name: username });
+  console.log(req.session)
+  res.render("dashboard");
 };
 
 exports.logout_post = (req, res) => {

@@ -28,6 +28,18 @@ app.use(
   })
 );
 
+// implementing corn job
+const cron = require('node-cron');
+
+cron.schedule('* * * * * *', () => {
+  console.log('running a task every second');
+});
+
+
+
+
+
+
 //=================== Routes
 // Landing Page
 app.get("/", appController.landing_page);
@@ -45,4 +57,4 @@ app.get("/dashboard", isAuth, appController.dashboard_get);
 
 app.post("/logout", appController.logout_post);
 
-app.listen(5000, console.log("App Running on http://localhost:5000"));
+app.listen(5000, () => console.log("App Running on http://localhost:5000"));
