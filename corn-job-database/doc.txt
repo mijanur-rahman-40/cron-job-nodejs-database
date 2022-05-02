@@ -1,0 +1,9 @@
+ # ┌────────────── second (optional) *, 0-59
+ # │ ┌──────────── minute *, 0-59
+ # │ │ ┌────────── hour *, 0-23
+ # │ │ │ ┌──────── day of month *, 1-31
+ # │ │ │ │ ┌────── month *, 1-12, or JAN-DEC, January-December
+ # │ │ │ │ │ ┌──── day of week *, 0-6, or SUN-SAT, Sunday-Saturday, 0,1,2,3,4,5,6
+ # │ │ │ │ │ │
+ # │ │ │ │ │ │
+ # * * * * * *
