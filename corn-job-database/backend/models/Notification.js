@@ -6,13 +6,11 @@ const NotificationSchema = new Schema({
         type: Boolean,
         default: false,
     },
-    category: {
-        type: String,
-        default: '',
-    },
-    info: {
-        type: Object,
-        default: {},
+    postData: {
+        type: Schema.Types.ObjectId,
+        required: true,
+        ref: 'Post',
+        index: true
     },
     createdAt: {
         type: Date,

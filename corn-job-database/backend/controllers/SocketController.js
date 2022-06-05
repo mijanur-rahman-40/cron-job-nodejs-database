@@ -13,7 +13,6 @@ const addNewUser = ({ connectionId }) => {
     return { user };
 }
 
-
 exports.joinSocket = (socket) => {
     console.log(`${ socket.id }: connected`);
     socket.on('join', ({ connectionId }, callback) => {
@@ -24,17 +23,11 @@ exports.joinSocket = (socket) => {
         socket.to(connectionId).emit('roomData', {
             user:'user'
         });
-        callback();
     });
 
     socket.on("disconnect", ({ }, callback) => {
         console.log('disconnected successfully');
-        callback();
     });
-
-};
-
-exports.createPost = (req, res, next) => {
 
 };
 

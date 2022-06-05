@@ -1,5 +1,5 @@
-const mongoose =  require('mongoose');
-const mysql  = require('mysql2');
+const mongoose = require('mongoose');
+const mysql = require('mysql2');
 
 // const pool = mysql.createPool({
 //     host: 'localhost',
@@ -17,7 +17,9 @@ mongoose
     .connect(databaseUrl,
         {
             useUnifiedTopology: true,
-            useNewUrlParser: true
+            useNewUrlParser: true,
+            useFindAndModify: false,
+            useCreateIndex: true
         })
     .then(() => console.log('MongoDb connected successfully'))
     .catch((error) => console.log(error));

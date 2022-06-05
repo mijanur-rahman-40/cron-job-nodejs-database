@@ -63,7 +63,7 @@ function App() {
 
     const onSubmit = () => {
         if (formData.taskName && formData.category && formData.description) {
-            axios.post('/post/newPost', formData)
+            axios.post('/notification/getNotifications', formData)
                 .then(res => {
                     setMessage(res.data.message);
                     setTimeout(() => {

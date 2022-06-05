@@ -1,18 +1,19 @@
 const express = require("express");
 const app = express();
-// implementing corn job
 const cron = require('node-cron');
 require('./config/db');
 
 const http = require('http');
-const testRouter = require('./routes/testRoute');
-const socketController = require('./controllers/socketController');
+const postRouter = require('./routes/postRoute');
+const notificationRouter = require('./routes/notificationRoute');
+const { getAllPosts } = require('./controllers/PostController');
+
+const socketController = require('./controllers/SocketController');
 
 // process.setMaxListeners(0);
 
 const server = http.createServer(app);
 const { Server } = require('socket.io');
-
 
 const io = new Server(server, {
     cors: {
@@ -31,19 +32,15 @@ app.set('socketIo', io);
 //   console.log('running a task every 3min');
 // });
 
+// corn job run every 10 minutes
+// cron.schedule('*/3 * * * *', () => {
+//     getAllPosts();
+//     console.log('running a task every 3 minutes');
+// });
+
 // cron.schedule('* * * * Sunday', () => {
 //   console.log('running a task every second');
 // });
-
-cron.schedule('* * * * *', () => {
-    // io.on('connection', (socket) => {
-    //     socket.on('join', ({ name, room }, callback) => {
-    //         console.log(name);
-    //         socket.emit('message', name);
-
-    //     });
-    // });
-});
 
 // cron.schedule('* * */3 * *', () => {
 //     console.log('that says, every minute of every hour on every three days. ');
@@ -52,6 +49,7 @@ cron.schedule('* * * * *', () => {
 // cron.schedule('0 0 */3 * *', () => {
 //     console.log('Says at 00:00 (midnight) every three days.');
 // });
+
 app.use((request, response, next) => {
     response.setHeader('Access-Control-Allow-Origin', '*')
     response.setHeader(
@@ -70,11 +68,10 @@ app.use((request, response, next) => {
 
 
 app.use(express.json());
-app.use('/post', testRouter);
+app.use('/post', postRouter);
+app.use('/notification', notificationRouter);
 
 io.on('connection', socketController.joinSocket);
 
 
-server.listen(5000, () => {
-    console.log('App Running on http://localhost:5000');
-});
+server.listen(5000, () => console.log('App Running on http://localhost:5000'));
