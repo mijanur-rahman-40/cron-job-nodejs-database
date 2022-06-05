@@ -3,10 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "main": "app.js",
-  "type": "module",
   "scripts": {
     "start": "node app.js",
-    "dev": "nodemon app.js"
+    "dev": "nodemon app.js --experimental-modules --es-module-specifier-resolution=node"
   },
   "keywords": [],
   "author": "",
@@ -19,7 +18,8 @@
     "mongodb-memory-server": "^8.5.2",
     "mongoose": "^5.9.27",
     "mysql2": "^2.3.3",
-    "node-cron": "^3.0.0"
+    "node-cron": "^3.0.0",
+    "socket.io": "^4.5.1"
   },
   "devDependencies": {
     "nodemon": "^2.0.4"
