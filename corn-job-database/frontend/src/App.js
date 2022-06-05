@@ -34,7 +34,7 @@ function App() {
     const room = '12345';
 
     React.useEffect(() => {
-       const socket = io(ENDPOINT, {
+        const socket = io(ENDPOINT, {
             withCredentials: true,
             extraHeaders: {
                 "my-custom-header": "any value"
@@ -50,7 +50,7 @@ function App() {
                 if (error) alert(error);
             });
         }
-        
+
         socket.on('message', (message, callback) => {
             console.log(message);
         });
@@ -85,21 +85,37 @@ function App() {
     const options = [
         {
             id: 0,
-            text: 'Dashboard1'
+            text: 'Task type 1'
         },
         {
             id: 1,
-            text: 'Dashboard2'
+            text: 'Task type 2'
         },
         {
             id: 2,
-            text: 'Dashboard3'
+            text: 'Task type 3'
         },
         {
             id: 3,
-            text: 'Dashboard4'
+            text: 'Task type 4'
         }
-    ]
+    ];
+
+    const taskCategoryRef = React.useRef();
+
+    // below is the same as componentDidMount and componentDidUnmount
+    React.useEffect(() => {
+        document.addEventListener("click", handleClickOutside, false);
+        return () => {
+            document.removeEventListener("click", handleClickOutside, false);
+        };
+    }, []);
+
+    const handleClickOutside = event => {
+        if (taskCategoryRef.current && !taskCategoryRef.current.contains(event.target)) {
+            setIsOpened(false);
+        }
+    };
 
     const { taskName, category, description } = formData;
 
@@ -130,24 +146,27 @@ function App() {
                                 onFocus={_ => setIsOpened(false)}
                             />
                         </div>
-                        <div
-                            onClick={_ => setIsOpened(true)}
-                            className={`w-full px-3 py-3 ${ isOpened ? 'border-indigo-500 border-2' : 'border border-gray-300' }  bg-white flex justify-between text-gray-900  focus:z-10 sm:text-sm`}>
-                            <label className='text-gray-500'>{category ? category : 'Select task category'}</label>
-                            <svg className="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path></svg>
+                        <div className="-space-y-px" ref={taskCategoryRef}>
+
+                            <div
+                                onClick={_ => setIsOpened(!isOpened)}
+                                className={`w-full px-3 py-3 ${ isOpened ? 'border-indigo-500 border-2' : 'border border-gray-300' }  bg-white flex justify-between text-gray-900  focus:z-10 sm:text-sm`}>
+                                <label className='text-gray-500'>{category ? category : 'Select task category'}</label>
+                                <svg className="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path></svg>
+                            </div>
+                            {isOpened &&
+                                <div className="z-10 absolute bg-white divide-y divide-gray-100 rounded shadow w-72" >
+                                    <ul className="py-1 text-sm text-gray-500" >
+                                        {options.map((option, index) =>
+                                            <li key={index} className="block px-4 py-2 cursor-pointer hover:bg-gray-100 hover:text-gray-600" onClick={_ => {
+                                                setIsOpened(false);
+                                                onChangeInput(option.text, 'category')
+                                            }
+                                            }>{option.text}</li>
+                                        )}
+                                    </ul>
+                                </div>}
                         </div>
-                        {isOpened &&
-                            <div className="z-10 absolute bg-white divide-y divide-gray-100 rounded shadow w-72">
-                                <ul className="py-1 text-sm text-gray-500" >
-                                    {options.map((option, index) =>
-                                        <li key={index} className="block px-4 py-2 cursor-pointer hover:bg-gray-100 hover:text-gray-600" onClick={_ => {
-                                            setIsOpened(false);
-                                            onChangeInput(option.text, 'category')
-                                        }
-                                        }>{option.text}</li>
-                                    )}
-                                </ul>
-                            </div>}
                         <div>
                             <textarea
                                 onFocus={_ => setIsOpened(false)}
@@ -208,7 +227,7 @@ function App() {
                                     <Link to="#" className="inline-flex justify-center w-full py-1.5 text-xs font-medium text-center text-white bg-blue-600 rounded-lg hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 ">Update</Link>
                                 </div>
                                 <div>
-                                    <Link to="#"  className="inline-flex justify-center w-full py-1.5 text-xs font-medium text-center text-gray-900 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200">Not now</Link>
+                                    <Link to="#" className="inline-flex justify-center w-full py-1.5 text-xs font-medium text-center text-gray-900 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200">Not now</Link>
                                 </div>
                             </div>
                         </div>
