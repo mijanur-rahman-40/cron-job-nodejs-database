@@ -9,7 +9,7 @@ import { FaTasks } from 'react-icons/fa';
 const Notification = () => {
 
     React.useEffect(() => {
-        axios.get('/post/getPosts')
+        axios.get('/notification/getAllNotifications')
             .then(res => {
                 console.log(res.data);
 
@@ -19,16 +19,16 @@ const Notification = () => {
             });
     });
 
-    return <section className='lg:w-[500px] w-[90%] md:w-[60%] lg:ml-14 mt-16 lg:mt-0'>
-        <h6 className='text-xl sm:text-2xl mt-5 lg:mt-0 font-medium text-transparent bg-clip-text bg-gradient-to-r from-blue-700 to-yellow-500'>Notifications</h6>
+    return <section className='lg:w-[500px] w-[90%] md:w-[60%] lg:ml-14 sm:mt-10 mt-5 md:mt-16 lg:mt-0'>
+        <h6 className='text-xl sm:text-2xl mt-5 lg:mt-0 font-semibold text-transparent bg-clip-text bg-gradient-to-r from-blue-700 to-yellow-500'>Notifications</h6>
         <div className="mt-3 mb-5 flex ">
             <div className="relative ">
                 <button className="font-medium text-gray-600 bg-gray-200 px-4 py-1 rounded-3xl hover:bg-blue-600 hover:text-white">All</button>
-                <div className="text-blue-700 absolute -top-2 -right-2 w-6 h-6 text-center font-normal text-sm rounded-full  bg-white">10</div>
+                <div className="text-blue-700 absolute -top-2 -right-2 w-6 h-6 text-center font-normal text-sm rounded-full flex justify-center items-center shadow-sm bg-white">10</div>
             </div>
             <div className="relative ml-5">
                 <button className="font-medium text-gray-600 bg-gray-200  px-4 py-1 rounded-3xl hover:bg-blue-600 hover:text-white">Unread</button>
-                <div className="text-blue-700 absolute -top-2 -right-2 w-6 h-6 text-center font-normal text-sm rounded-full bg-white">5</div>
+                <div className="text-blue-700 flex justify-center items-center absolute -top-2 -right-2 w-6 h-6 text-center font-normal text-sm rounded-full shadow-sm bg-white">5</div>
             </div>
         </div>
         <div id="toast-notification" className="w-full p-4 bg-white rounded-lg shadow cursor-pointer" role="alert">
@@ -64,10 +64,10 @@ const Notification = () => {
                     <span className="text-xs font-medium text-blue-600 dark:text-blue-500">2 days ago</span>
                     <div className="grid grid-cols-3 gap-2 mt-2">
                         <div>
-                            <Link to="#" className="inline-flex justify-center w-full py-1.5 text-xs font-medium text-center text-white bg-blue-600 rounded-lg hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300">Accept</Link>
+                            <Link to="#" className="inline-flex justify-center w-full py-1.5 text-xs font-bold text-center text-white bg-blue-600 rounded-lg hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300">Accept</Link>
                         </div>
                         <div>
-                            <Link to="#" className="inline-flex justify-center w-full py-1.5 text-xs font-medium text-center text-gray-900 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200">Not now</Link>
+                            <Link to="#" className="inline-flex justify-center w-full py-1.5 text-xs font-bold text-center text-gray-900 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200">Not now</Link>
                         </div>
                     </div>
                 </div>

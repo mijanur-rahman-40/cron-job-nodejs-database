@@ -6,7 +6,7 @@ require('./config/db');
 const http = require('http');
 const postRouter = require('./routes/postRoute');
 const notificationRouter = require('./routes/notificationRoute');
-const { getAllPosts } = require('./controllers/PostController');
+const { postNotifications } = require('./controllers/NotificationController');
 
 const socketController = require('./controllers/SocketController');
 
@@ -32,11 +32,11 @@ app.set('socketIo', io);
 //   console.log('running a task every 3min');
 // });
 
-// corn job run every 10 minutes
-// cron.schedule('*/3 * * * *', () => {
-//     getAllPosts();
-//     console.log('running a task every 3 minutes');
-// });
+// corn job run every 2 minutes
+cron.schedule('*/2 * * * *', () => {
+    postNotifications();
+    console.log('running a task every 2 minutes');
+});
 
 // cron.schedule('* * * * Sunday', () => {
 //   console.log('running a task every second');
