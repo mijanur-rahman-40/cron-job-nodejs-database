@@ -55,7 +55,7 @@ const PostNotification = ({ post }) => {
 
     return <div className='lg:w-[500px] w-[90%] md:w-[60%] '>
 
-        <div className="space-y-6 p-5 md:p-7 bg-white rounded-md shadow-sm">
+        <div className="space-y-6 p-5 md:p-7 bg-white rounded-lg shadow-sm">
                 <div className='w-full'>
                     {message && <div className="p-2 text-sm font-normal text-blue-500 bg-gray-100 rounded-lg" role="alert">
                         <span className="font-medium">{message}</span>
