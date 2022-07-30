@@ -44,14 +44,6 @@ function App() {
     return <React.Fragment>
         <Nav />
         <div className='debug-screens bg-slate-100 min-h-screen'>
-            <div className='w-full mx-3 sm:m-0'>
-
-                {/* <div className='m-0 flex justify-center py-3'>
-                {message && <div className="p-4 text-sm text-blue-700 bg-blue-100 rounded-lg" role="alert">
-                    <span className="font-medium">{message}</span>
-                </div>}
-            </div> */}
-            </div>
             <div className='flex w-full pt-7 md:pt-16 justify-center items-center lg:items-start flex-col lg:flex-row'>
                 <PostNotification />
                 <Notification />

@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from 'react-router-dom';
 import axios from '../../../utility/axios';
 import User from '../../../assets/images/user.jpg';
-import { MdClear, MdAdminPanelSettings } from 'react-icons/md';
+import { MdClear } from 'react-icons/md';
 import { RiShieldUserFill } from 'react-icons/ri';
 import { FaTasks } from 'react-icons/fa';
 
