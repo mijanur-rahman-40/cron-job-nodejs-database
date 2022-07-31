@@ -75,7 +75,7 @@ const PostNotification = ({ post }) => {
                 <div>
                     <label className="sr-only">Task name</label>
                     <input
-                        className="appearance-none rounded-lg w-full px-3 py-2.5 border border-gray-300 placeholder-gray-500 text-gray-700 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:border-2"
+                        className="appearance-none rounded-lg w-full px-3 py-2.5 border-2 border-gray-300 placeholder-gray-500 text-gray-700 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:border-2"
                         placeholder="Task name"
                         name='taskName'
                         value={taskName}
@@ -94,6 +94,7 @@ const PostNotification = ({ post }) => {
                     <ul className="py-1 text-sm font-normal text-gray-700" aria-labelledby="dropdownDefault">
                         {options.map((option, index) => {
                             return <li
+                                key={index}
                                 className="py-2 px-4 hover:bg-gray-100"
                                 onClick={(event) => onChangeInput(option.text, 'category')}
                             >

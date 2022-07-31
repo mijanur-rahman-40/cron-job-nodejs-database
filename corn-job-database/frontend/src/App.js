@@ -4,6 +4,7 @@ import { io } from 'socket.io-client';
 import Notification from './containers/Home/Notifications';
 import PostNotification from './containers/Home/PostNotification';
 import Nav from './components/Nav';
+import { subscribeUser } from './subscription';
 
 const ENDPOINT = 'http://localhost:5000';
 
@@ -44,6 +45,20 @@ function App() {
     return <React.Fragment>
         <Nav />
         <div className='debug-screens bg-slate-100 min-h-screen'>
+            <header className="App-header">
+                <button onClick={subscribeUser}>Click Here</button>
+                <p>
+                    Edit <code>src/App.js</code> and save to reload.
+                </p>
+                <a
+                    className="App-link"
+                    href="https://reactjs.org"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    Learn React
+                </a>
+            </header>
             <div className='flex w-full pt-7 md:pt-16 justify-center items-center lg:items-start flex-col lg:flex-row'>
                 <PostNotification />
                 <Notification />

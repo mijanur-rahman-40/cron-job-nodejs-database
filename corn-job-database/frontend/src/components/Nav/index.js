@@ -12,7 +12,7 @@ const Navbar = () => {
             url: ''
         },
         {
-            text: 'About',
+            text: 'Posts',
             url: ''
         },
         {
@@ -30,7 +30,7 @@ const Navbar = () => {
             <div className="justify-between absolute lg:sticky top-10 right-10 lg:flex items-center hidden" id="mobile-menu-2">
                 <ul className="flex flex-col p-4 mt-4 bg-gray-50 rounded-lg border border-gray-100 lg:flex-row lg:space-x-8 lg:mt-0 lg:text-sm lg:font-medium lg:border-0 lg:bg-white ">
                     {items.map((item, index) => (
-                        <li>
+                        <li key={index}>
                             <Link to='' className="block font-medium text-base px-3 py-2 text-gray-700 hover:bg-blue-700 rounded hover:lg:rounded-xl hover:text-white lg:hover:text-blue-700 hover:lg:bg-gray-100  transition">{item.text}</Link>
                         </li>
                     ))}
