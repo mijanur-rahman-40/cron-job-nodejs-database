@@ -5,6 +5,7 @@ import Notification from './containers/Home/Notifications';
 import PostNotification from './containers/Home/PostNotification';
 import Nav from './components/Nav';
 import { subscribeUser } from './subscription';
+import { unregister } from './serviceWorker';
 
 const ENDPOINT = 'http://localhost:5000';
 
@@ -47,6 +48,7 @@ function App() {
         <div className='debug-screens bg-slate-100 min-h-screen'>
             <header className="App-header">
                 <button onClick={subscribeUser}>Click Here</button>
+                <button onClick={e => unregister()} className='mx-2'>Unregister</button>
                 <p>
                     Edit <code>src/App.js</code> and save to reload.
                 </p>

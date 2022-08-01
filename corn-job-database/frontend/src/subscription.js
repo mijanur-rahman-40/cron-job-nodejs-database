@@ -34,40 +34,49 @@ function sendSubscription(subscription) {
         }
     });
 }
+
+
 //conditional render
 let clicked = true
 
 export function subscribeUser() {
     if (clicked) {
         if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.ready.then(function (registration) {
-                if (!registration.pushManager) {
-                    console.log('Push manager unavailable.')
-                    return
-                }
-
-                registration.pushManager.getSubscription().then(function (existedSubscription) {
-                    if (existedSubscription === null) {
-                        console.log('No subscription detected, make a request.')
-                        registration.pushManager.subscribe({
-                            applicationServerKey: convertedVapidKey,
-                            userVisibleOnly: true,
-                        }).then(function (newSubscription) {
-                            console.log('New subscription added.', newSubscription)
-                            sendSubscription(newSubscription)
-                        }).catch(function (e) {
-                            if (Notification.permission !== 'granted') {
-                                console.log('Permission was not granted.')
-                            } else {
-                                console.error('An error ocurred during the subscription process.', e)
-                            }
-                        })
-                    } else {
-                        console.log('Existed subscription detected.')
-                        sendSubscription(existedSubscription)
+            const swFileName = process.env.NODE_ENV === 'production' ? 'service-worker.js' : 'custom-sw.js'
+            const swUrl = `${process.env.PUBLIC_URL}/${swFileName}`;
+            
+            navigator.serviceWorker.register(swUrl)
+                .then(function (registration) {
+                    if (!registration.pushManager) {
+                        console.log('Push manager unavailable.')
+                        return
                     }
+
+                    registration.pushManager.getSubscription().then(function (existedSubscription) {
+                        if (existedSubscription === null) {
+                            console.log('No subscription detected, make a request.');
+
+                            registration.pushManager.subscribe({
+                                applicationServerKey: convertedVapidKey,
+                                userVisibleOnly: true,
+                            })
+                                .then(function (newSubscription) {
+                                    console.log('New subscription added.', newSubscription)
+                                    sendSubscription(newSubscription)
+                                })
+                                .catch(function (e) {
+                                    if (Notification.permission !== 'granted') {
+                                        console.log('Permission was not granted.')
+                                    } else {
+                                        console.error('An error ocurred during the subscription process.', e)
+                                    }
+                                })
+                        } else {
+                            console.log('Existed subscription detected.')
+                            // sendSubscription(existedSubscription)
+                        }
+                    })
                 })
-            })
                 .catch(function (e) {
                     console.error('An error ocurred during Service Worker registration.', e)
                 })

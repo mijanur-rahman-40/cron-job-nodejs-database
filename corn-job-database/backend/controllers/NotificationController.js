@@ -65,7 +65,7 @@ exports.subscribe = (request, response) => {
     })
     console.log(request.body.subscription);
 
-    
+
     webpush.sendNotification(request.body.subscription, payload)
         .then(result => console.log())
         .catch(e => console.log(e.stack))
@@ -73,6 +73,27 @@ exports.subscribe = (request, response) => {
     response.status(200).json({ 'success': true })
 }
 
+exports.sendNotification = () => {
+
+    const payload = JSON.stringify({
+        title: 'request.body.title',
+        description: 'request.body.description',
+        // icon: request.body.icon
+    })
+
+    const subscription = {
+        endpoint: 'https://updates.push.services.mozilla.com/wpush/v2/gAAAAABi55v3uDX8TYMImjn5LBv0Gyk7Wt9FHbEtslbVT4MQEz3zUvq9zepidf8xaxy-2AokKjfhC7mxXhNp0Y-UBYoGNDcHiCata0V3ljnTwbvBgtzRXsrfPQVvPp3twwz1j9PEa7vFGIJbIKHehCxQ2Uer7femTPaZ8wwa0h-3_3W1kkClUYM',
+        expirationTime: null,
+        keys: {
+            auth: 'U3uIACaggP0hZbTqxKv0aQ',
+            p256dh: 'BDEByznxAMhpTE-0A4oVWHtaKIqfEifY44Cd__rspJFfUdNXvd058s9FUYVrPEGBFNE68LyYDxh7_mw2iEq-BeU'
+        }
+    };
+
+    webpush.sendNotification(subscription, payload)
+        .then(result => console.log())
+        .catch(e => console.log(e.stack))
+}
 
 
 
