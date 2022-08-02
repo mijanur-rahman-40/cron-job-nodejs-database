@@ -1,5 +1,5 @@
 import React from "react";
-import axios from '../../../utility/axios';
+import axios from '../../../utils/axios';
 import { RiArrowDropDownLine } from 'react-icons/ri';
 import { PulseLoader } from "react-spinners";
 
@@ -13,10 +13,10 @@ const PostNotification = ({ post }) => {
             id: 1,
             text: 'Task type 2'
         },
-        {
-            id: 2,
-            text: 'Task type 3'
-        }
+        // {
+        //     id: 2,
+        //     text: 'Task type 3'
+        // }
     ];
 
     const [formData, setFormData] = React.useState({
@@ -84,7 +84,7 @@ const PostNotification = ({ post }) => {
                 </div>
                 <button
                     id="dropdownDefault"
-                    data-dropdown-toggle="dropdown" className="my-4 border border-gray-300 text-gray-700 w-full  focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:border-2  rounded-lg px-3 py-2 text-center inline-flex justify-between items-center"
+                    data-dropdown-toggle="dropdown" className="my-4 border-2 border-gray-300 text-gray-700 w-full  focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:border-2  rounded-lg px-3 py-2 text-center inline-flex justify-between items-center"
                     type="button">
                     {category ? category : 'Select task type'}
                     <RiArrowDropDownLine className="ml-2 w-8 h-8" />
@@ -96,7 +96,7 @@ const PostNotification = ({ post }) => {
                             return <li
                                 key={index}
                                 className="py-2 px-4 hover:bg-gray-100"
-                                onClick={(event) => onChangeInput(option.text, 'category')}
+                                onClick={(event) => onChangeInput(option.id, 'category')}
                             >
                                 {option.text}
                             </li>
@@ -105,7 +105,7 @@ const PostNotification = ({ post }) => {
                 </div>
                 <div>
                     <textarea
-                        className="appearance-none resize-none h-40 mb-4 rounded-lg w-full px-3 py-2.5 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-2 focus:border-indigo-500" placeholder="Description"
+                        className="appearance-none resize-none h-40 mb-4 rounded-lg w-full px-3 py-2.5 border-2 border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-2 focus:border-indigo-500" placeholder="Description"
                         name='description'
                         value={description}
                         onChange={event => onChangeInput(event.target.value, event.target.name)}

@@ -1,25 +1,31 @@
 import React from 'react';
 import AppImage from '../../assets/images/App.png';
 import User from '../../assets/images/user.jpg';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { GiHamburgerMenu } from 'react-icons/gi';
 import { MdSearch } from 'react-icons/md';
+
+const domain = 'http://localhost:3000';
 
 const Navbar = () => {
     const items = [
         {
             text: 'Home',
-            url: ''
+            url: '/'
         },
         {
             text: 'Posts',
-            url: ''
+            url: '/posts'
         },
         {
             text: 'Services',
-            url: ''
+            url: '/services'
         }
-    ]
+    ];
+
+    const location = useLocation();
+
+    console.log(location);
 
     return <nav className="bg-white border-b-gray-200 px-2 pt-3 lg:pt-0 sm:px-4  h-[70px]">
         <div className="container flex justify-between items-center mx-auto">
@@ -31,7 +37,9 @@ const Navbar = () => {
                 <ul className="flex flex-col p-4 mt-4 bg-gray-50 rounded-lg border border-gray-100 lg:flex-row lg:space-x-8 lg:mt-0 lg:text-sm lg:font-medium lg:border-0 lg:bg-white ">
                     {items.map((item, index) => (
                         <li key={index}>
-                            <Link to='' className="block font-medium text-base px-3 py-2 text-gray-700 hover:bg-blue-700 rounded hover:lg:rounded-xl hover:text-white lg:hover:text-blue-700 hover:lg:bg-gray-100  transition">{item.text}</Link>
+                            <Link to={item.url} className={`block font-medium text-base px-3 py-2 text-gray-700 hover:bg-blue-700 rounded hover:lg:rounded-xl hover:text-white lg:hover:text-blue-700 hover:lg:bg-gray-100  transition ${location.pathname === item.url && 'bg-blue-700 text-white lg:bg-gray-100 lg:text-blue-700 lg:rounded-xl lg:hover:text-blue-700'}`}
+
+                            >{item.text}</Link>
                         </li>
                     ))}
                 </ul>

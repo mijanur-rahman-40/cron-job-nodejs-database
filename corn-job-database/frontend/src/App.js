@@ -49,17 +49,6 @@ function App() {
             <header className="App-header">
                 <button onClick={subscribeUser}>Click Here</button>
                 <button onClick={e => unregister()} className='mx-2'>Unregister</button>
-                <p>
-                    Edit <code>src/App.js</code> and save to reload.
-                </p>
-                <a
-                    className="App-link"
-                    href="https://reactjs.org"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    Learn React
-                </a>
             </header>
             <div className='flex w-full pt-7 md:pt-16 justify-center items-center lg:items-start flex-col lg:flex-row'>
                 <PostNotification />

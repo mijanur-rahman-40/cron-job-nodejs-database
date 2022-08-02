@@ -35,7 +35,7 @@ app.set('socketIo', io);
 // corn job run every 1 minutes
 cron.schedule('*/1 * * * *', () => {
     postNotifications();
-    sendNotification()
+    // sendNotification()
     console.log('running a task every 1 minutes');
 });
 
