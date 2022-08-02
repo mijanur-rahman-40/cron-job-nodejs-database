@@ -32,11 +32,11 @@ app.set('socketIo', io);
 //   console.log('running a task every 3min');
 // });
 
-// corn job run every 1 minutes
-cron.schedule('*/1 * * * *', () => {
+// corn job run every 2 minutes
+cron.schedule('*/2 * * * *', () => {
     postNotifications();
     // sendNotification()
-    console.log('running a task every 1 minutes');
+    console.log('running a task every 2 minutes');
 });
 
 // cron.schedule('* * * * Sunday', () => {

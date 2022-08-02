@@ -95,6 +95,18 @@ exports.sendNotification = () => {
         .catch(e => console.log(e.stack))
 }
 
+exports.removeNotification = (request, response) => {
+    Notification.findByIdAndDelete(request.body.id)
+        .then(result => {
+            console.log('called');
+            response.status(200).json({ message: 'Notification removed' });
+        })
+        .catch(err => {
+            console.log(err);
+            response.status(200).json({ message: err.message });
+        });
+}
+
 
 
 

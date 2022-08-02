@@ -11,50 +11,25 @@ const Notification = () => {
     const [notifications, setNotifications] = React.useState([]);
 
     React.useEffect(() => {
-        axios.get('/notification/getAllNotifications')
-            .then(res => {
-                console.log(res.data);
-                setNotifications(res.data);
-
-            })
-            .catch(err => {
-                console.log(err.message);
-            });
+        setInterval(() => {
+            getAllNotifications();
+        }, 2000);
     }, []);
 
-    console.log(notifications);
+    const getAllNotifications = () => {
+        axios.get('/notification/getAllNotifications')
+            .then(res => {
+                setNotifications(res.data);
+            })
+            .catch(error => {
+                console.log(error);
+            });
+    }
 
     const userCategory = {
         "User": <FaUserCircle className="w-4 h-4 text-white" />,
         "Admin": <RiShieldUserFill className="w-4 h-4 text-white" />,
     }
-
-    const users = [
-        {
-            id: 0,
-            name: 'John Doe',
-            role: 'Admin',
-            profileImage: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=580&q=80',
-        },
-        {
-            id: 2,
-            name: 'Mijanur Rahman',
-            role: 'User',
-            profileImage: User,
-        },
-        {
-            id: 3,
-            name: 'Masud Rana',
-            role: 'Admin',
-            profileImage: 'https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8dXNlcnN8ZW58MHx8MHx8&w=1000&q=80',
-        },
-        {
-            id: 4,
-            name: 'Rahim Uddin',
-            role: 'User',
-            profileImage: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8OHx8dXNlcnxlbnwwfHwwfHw%3D&w=1000&q=80',
-        }
-    ];
 
     const [category, setCategory] = React.useState('all');
 
@@ -62,9 +37,21 @@ const Notification = () => {
         "all": notifications,
         "unread": notifications.filter(notification => notification.isSeen === false)
     }
+
     // publish, request, post, comment, join etc
 
     const allNotification = notificationCategory[category];
+
+    const removeNotification = (id) => {
+        axios.post('/notification/removeNotification', { id })
+            .then(res => {
+                console.log(res.data);
+                setNotifications(notifications.filter(notification => notification._id !== id));
+            })
+            .catch(err => {
+                console.log(err.message);
+            });
+    }
 
 
     return <section className='lg:w-[500px] w-[90%] md:w-[60%] lg:ml-14 sm:mt-10 mt-5 md:mt-16 lg:mt-0'>
@@ -93,19 +80,18 @@ const Notification = () => {
         </div>
 
         {allNotification.map((notification, index) => {
-            var item = users[Math.floor(Math.random() * users.length)];
 
             const categoryArray = [
                 <div id="toast-notification" className={`w-full mb-3 p-4 text-gray-500 ${notification.isSeen ? 'bg-gray-100' : 'bg-white'} bg-white  rounded-lg shadow`} role="alert">
                     <div className="flex">
                         <div className="relative inline-block shrink-0">
-                            <img className="h-12 w-12 object-cover rounded-full" src={item.profileImage} alt="Jese Leos" />
+                            <img className="h-12 w-12 object-cover rounded-full" src={notification.user.profileImage} alt="Jese Leos" />
                             <span className="absolute bottom-0 right-0 inline-flex items-center justify-center w-6 h-6 bg-blue-600 rounded-full">
-                                {userCategory[item.role]}
+                                {userCategory[notification.user.role]}
                             </span>
                         </div>
                         <div className="ml-3 text-sm font-normal">
-                            <h5 className="text-sm font-semibold text-gray-900">{item.name}</h5>
+                            <h5 className="text-sm font-semibold text-gray-900">{notification.user.name}</h5>
                             <div className="text-sm font-normal text-gray-400">
                                 {notification.postData.description.length > 50 ? notification.postData.description.slice(0, 50) + '...' : notification.postData.description}
                             </div>
@@ -113,11 +99,14 @@ const Notification = () => {
                         </div>
                         <button type="button" className="ml-auto -mx-1.5 -my-1.5 bg-white text-gray-500 rounded-lg focus:ring-2 focus:ring-gray-300 p-1.5 hover:text-blue-700 hover:bg-gray-100 inline-flex h-8 w-8" data-dismiss-target="#toast-notification" aria-label="Close">
                             <span className="sr-only">Close</span>
-                            <MdClear className="w-5 h-5" />
+                            <MdClear
+                                onClick={() => { removeNotification(notification._id) }}
+                                className="w-5 h-5"
+                            />
                         </button>
                     </div>
                 </div>,
-                <div id="toast-interactive" className={`w-full mb-3 p-4 text-gray-500 ${notification.isSeen ? 'bg-gray-100' :'bg-white'} bg-white  rounded-lg shadow`} role="alert">
+                <div id="toast-interactive" className={`w-full mb-3 p-4 text-gray-500 ${notification.isSeen ? 'bg-gray-100' : 'bg-white'} bg-white  rounded-lg shadow`} role="alert">
                     <div className="flex">
                         <div className="inline-flex items-center justify-center flex-shrink-0 w-10 h-10 text-blue-600 bg-blue-100 rounded-lg">
                             <FaTasks className="w-6 h-6" />
@@ -125,7 +114,7 @@ const Notification = () => {
                         <div className="ml-3 text-sm font-normal">
                             <span className="mb-1 text-sm font-semibold text-gray-900">New Task Avaibale</span>
                             <div className="mb-2 text-sm font-normal">
-                                <span><span className="text-gray-900">{item.name} </span>
+                                <span><span className="text-gray-900">{notification.user.name} </span>
                                     {notification.postData.description.length > 35 ? notification.postData.description.slice(0, 35) + '...' : notification.postData.description}
                                 </span>
                             </div>
@@ -141,13 +130,16 @@ const Notification = () => {
                         </div>
                         <button type="button" className="ml-auto -mx-1.5 -my-1.5 bg-white text-gray-500 hover:text-blue-700 rounded-lg focus:ring-2 focus:ring-gray-300 p-1.5 hover:bg-gray-100 inline-flex h-8 w-8" data-dismiss-target="#toast-interactive" aria-label="Close">
                             <span className="sr-only">Close</span>
-                            <MdClear className="w-5 h-5" />
+                            <MdClear
+                                className="w-5 h-5"
+                                onClick={() => { removeNotification(notification._id) }}
+                            />
                         </button>
                     </div>
                 </div>
             ];
             return <React.Fragment key={index}>
-                {categoryArray[parseInt(notification.postData.category)]}
+                {categoryArray[parseInt(notification.postData.category.id)]}
             </React.Fragment>
         })}
 

@@ -7,8 +7,10 @@ const PostSchema = new Schema({
         default: '',
     },
     category: {
-        type: String,
-        default: '',
+        type: Object,
+    },
+    user: {
+        type: Object,
     },
     description: {
         type: String,

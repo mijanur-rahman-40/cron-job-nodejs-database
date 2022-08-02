@@ -86,8 +86,8 @@ const PostNotification = ({ post }) => {
                     id="dropdownDefault"
                     data-dropdown-toggle="dropdown" className="my-4 border-2 border-gray-300 text-gray-700 w-full  focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:border-2  rounded-lg px-3 py-2 text-center inline-flex justify-between items-center"
                     type="button">
-                    {category ? category : 'Select task type'}
-                    <RiArrowDropDownLine className="ml-2 w-8 h-8" />
+                    {category ? category.text : 'Select task type'}
+                    <RiArrowDropDownLine className="ml-2 w-8 h-8 text-gray-500" />
                 </button>
 
                 <div id="dropdown" className="hidden  z-10 w-44 bg-white rounded-lg divide-y divide-gray-100 shadow">
@@ -95,8 +95,8 @@ const PostNotification = ({ post }) => {
                         {options.map((option, index) => {
                             return <li
                                 key={index}
-                                className="py-2 px-4 hover:bg-gray-100"
-                                onClick={(event) => onChangeInput(option.id, 'category')}
+                                className="py-2 px-4 cursor-pointer hover:bg-gray-100"
+                                onClick={(event) => onChangeInput( option , 'category')}
                             >
                                 {option.text}
                             </li>

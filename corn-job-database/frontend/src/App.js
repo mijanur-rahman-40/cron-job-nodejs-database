@@ -5,7 +5,7 @@ import { Home, Services, Posts } from './containers';
 import Nav from './components/Nav';
 // import { subscribeUser } from './subscription';
 // import { unregister } from './serviceWorker';
-import { Routes, Route, BrowserRouter } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 
 const ENDPOINT = 'http://localhost:5000';
 
