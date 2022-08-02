@@ -1,19 +1,18 @@
 import React from "react";
 import { Link } from 'react-router-dom';
 import axios from '../../../utils/axios';
-import User from '../../../assets/images/user.jpg';
+// import User from '../../../assets/images/user.jpg';
 import { MdClear } from 'react-icons/md';
 import { RiShieldUserFill } from 'react-icons/ri';
 import { FaTasks, FaUserCircle } from 'react-icons/fa';
 import { getDate } from '../../../utils/utility';
+import { useNavigate } from 'react-router-dom'
 
 const Notification = () => {
     const [notifications, setNotifications] = React.useState([]);
 
     React.useEffect(() => {
-        setInterval(() => {
-            getAllNotifications();
-        }, 2000);
+        getAllNotifications();
     }, []);
 
     const getAllNotifications = () => {
@@ -25,6 +24,11 @@ const Notification = () => {
                 console.log(error);
             });
     }
+
+    setInterval(() => {
+        getAllNotifications();
+    }, 5000);
+
 
     const userCategory = {
         "User": <FaUserCircle className="w-4 h-4 text-white" />,
@@ -53,6 +57,17 @@ const Notification = () => {
             });
     }
 
+    let navigate = useNavigate();
+
+    const goToAnother = (notificationId, postId) => {
+        axios.post('/notification/setSeenNotification', { id: notificationId })
+            .then(res => {
+                navigate(`/posts?postId=${postId}`);
+            })
+            .catch(err => {
+                console.log(err.message);
+            });
+    }
 
     return <section className='lg:w-[500px] w-[90%] md:w-[60%] lg:ml-14 sm:mt-10 mt-5 md:mt-16 lg:mt-0'>
         <h6 className='text-xl sm:text-2xl mt-5 lg:mt-0 font-semibold text-transparent bg-clip-text bg-gradient-to-r from-blue-700 to-yellow-500'>Notifications</h6>
@@ -82,16 +97,19 @@ const Notification = () => {
         {allNotification.map((notification, index) => {
 
             const categoryArray = [
-                <div id="toast-notification" className={`w-full mb-3 p-4 text-gray-500 ${notification.isSeen ? 'bg-gray-100' : 'bg-white'} bg-white  rounded-lg shadow`} role="alert">
+                <div
+                    onClick={() => goToAnother(notification._id, notification.postData._id)}
+                    id="toast-notification"
+                    className={`w-full cursor-pointer mb-3 p-4 text-gray-500 ${notification.isSeen ? 'bg-gray-100' : 'bg-white'} bg-white  rounded-lg shadow`} role="alert">
                     <div className="flex">
                         <div className="relative inline-block shrink-0">
-                            <img className="h-12 w-12 object-cover rounded-full" src={notification.user.profileImage} alt="Jese Leos" />
+                            <img className="h-12 w-12 object-cover rounded-full" src={notification.postData.user.profileImage} alt="Jese Leos" />
                             <span className="absolute bottom-0 right-0 inline-flex items-center justify-center w-6 h-6 bg-blue-600 rounded-full">
-                                {userCategory[notification.user.role]}
+                                {userCategory[notification.postData.user.role]}
                             </span>
                         </div>
                         <div className="ml-3 text-sm font-normal">
-                            <h5 className="text-sm font-semibold text-gray-900">{notification.user.name}</h5>
+                            <h5 className="text-sm font-semibold text-gray-900">{notification.postData.user.name}</h5>
                             <div className="text-sm font-normal text-gray-400">
                                 {notification.postData.description.length > 50 ? notification.postData.description.slice(0, 50) + '...' : notification.postData.description}
                             </div>
@@ -106,7 +124,11 @@ const Notification = () => {
                         </button>
                     </div>
                 </div>,
-                <div id="toast-interactive" className={`w-full mb-3 p-4 text-gray-500 ${notification.isSeen ? 'bg-gray-100' : 'bg-white'} bg-white  rounded-lg shadow`} role="alert">
+                <div
+                    onClick={() => goToAnother(notification._id, notification.postData._id)}
+                    id="toast-interactive"
+                    className={`w-full mb-3 p-4 text-gray-500 ${notification.isSeen ? 'bg-gray-100' : 'bg-white'} bg-white  rounded-lg shadow`}
+                    role="alert">
                     <div className="flex">
                         <div className="inline-flex items-center justify-center flex-shrink-0 w-10 h-10 text-blue-600 bg-blue-100 rounded-lg">
                             <FaTasks className="w-6 h-6" />
@@ -114,7 +136,7 @@ const Notification = () => {
                         <div className="ml-3 text-sm font-normal">
                             <span className="mb-1 text-sm font-semibold text-gray-900">New Task Avaibale</span>
                             <div className="mb-2 text-sm font-normal">
-                                <span><span className="text-gray-900">{notification.user.name} </span>
+                                <span><span className="text-gray-900">{notification.postData.user.name} </span>
                                     {notification.postData.description.length > 35 ? notification.postData.description.slice(0, 35) + '...' : notification.postData.description}
                                 </span>
                             </div>

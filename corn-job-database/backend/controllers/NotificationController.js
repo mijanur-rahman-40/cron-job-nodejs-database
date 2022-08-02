@@ -56,8 +56,6 @@ exports.getAllNotifications = (request, response, next) => {
 
 
 exports.subscribe = (request, response) => {
-    console.log(request.body);
-
     const payload = JSON.stringify({
         title: request.body.title,
         description: request.body.description,
@@ -106,6 +104,24 @@ exports.removeNotification = (request, response) => {
             response.status(200).json({ message: err.message });
         });
 }
+
+exports.setSeenNotification = (request, response) => {
+    
+    Notification.findByIdAndUpdate(request.body.id,{
+        $set:{
+            isSeen: true
+        }
+    })
+        .then(result => {
+            console.log('called');
+            response.status(200).json({ message: 'Notification is seened' });
+        })
+        .catch(err => {
+            console.log(err);
+            response.status(200).json({ message: err.message });
+        });
+}
+
 
 
 
