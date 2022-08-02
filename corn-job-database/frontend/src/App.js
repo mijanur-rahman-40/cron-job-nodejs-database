@@ -1,11 +1,11 @@
 import React from 'react';
 import './App.css';
 import { io } from 'socket.io-client';
-import Notification from './containers/Home/Notifications';
-import PostNotification from './containers/Home/PostNotification';
+import { Home, Services, Posts } from './containers';
 import Nav from './components/Nav';
-import { subscribeUser } from './subscription';
-import { unregister } from './serviceWorker';
+// import { subscribeUser } from './subscription';
+// import { unregister } from './serviceWorker';
+import { Routes, Route, BrowserRouter } from 'react-router-dom';
 
 const ENDPOINT = 'http://localhost:5000';
 
@@ -45,14 +45,18 @@ function App() {
 
     return <React.Fragment>
         <Nav />
+
         <div className='debug-screens bg-slate-100 min-h-screen'>
-            <header className="App-header">
+            {/* <header className="App-header">
                 <button onClick={subscribeUser}>Click Here</button>
                 <button onClick={e => unregister()} className='mx-2'>Unregister</button>
-            </header>
+            </header> */}
             <div className='flex w-full pt-7 md:pt-16 justify-center items-center lg:items-start flex-col lg:flex-row'>
-                <PostNotification />
-                <Notification />
+                <Routes>
+                    <Route exact path="/" element={<Home />} />
+                    <Route exact path="/posts" element={<Posts />} />
+                    <Route exact path="/services" element={<Services />} />
+                </Routes>
             </div>
         </div>
     </React.Fragment>
